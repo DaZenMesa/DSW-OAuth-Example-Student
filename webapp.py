@@ -76,7 +76,11 @@ def renderPage1():
 
 @app.route('/page2')
 def renderPage2():
-    return render_template('page2.html')
+    if 'user_data' in session:
+        user_public_repos=session['user_data']["public_repos"]
+    else:
+        user_data_pprint = '';
+    return render_template('page2.html', users_repos=user_public_repos)
 
 @github.tokengetter
 def get_github_oauth_token():
