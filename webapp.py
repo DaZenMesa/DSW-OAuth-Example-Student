@@ -79,7 +79,8 @@ def renderPage2():
     if 'user_data' in session:
         user_public_repos=session['user_data']["public_repos"]
     else:
-        user_data_pprint = '';
+        print(done)
+        user_public_repos = '';
     return render_template('page2.html', users_repos=user_public_repos)
 
 @github.tokengetter
