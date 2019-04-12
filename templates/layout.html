@@ -24,7 +24,21 @@
 
 
     <div id="content">
-
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+          <div class="alert alert-success">
+            <strong>Success!</strong>
+              <li>
+                {{ message }}
+              </li>
+          </div>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      {% block body %}{% endblock %}
   {% block content %}{% endblock %}</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -36,5 +50,3 @@
 
   </body>
 </html>
-
-

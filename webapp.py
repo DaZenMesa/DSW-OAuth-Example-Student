@@ -18,7 +18,7 @@ app.secret_key = os.environ['SECRET_KEY']
 oauth = OAuth(app)
 oauth.init_app(app)
 
-
+os.environ['OAUTHLIB_INSECURE_TRANSPORT']='1'
 github = oauth.remote_app(
     'github',
     consumer_key=os.environ['GITHUB_CLIENT_ID'],
@@ -59,10 +59,10 @@ def authorized():
         try:
             session['github_token'] = (resp['access_token'], '')
             session['user_data'] = github.get('user').data
-            message = "Congratualations, %s, you were successfully logged in!" % session['user_data']['login']
+            flash("Congratualations, %s, you were successfully logged in!" % session['user_data']['login'])
         except:
             session.clear()
-            message = "Login could not be completed. Please try again later. \u2639"
+            flash("Login could not be completed. Please try again later.")
     return render_template('message.html', message=message)
 
 
