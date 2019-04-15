@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, request, jsonify
+from flask import Flask, redirect, flash, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
 from flask import render_template
 
@@ -42,7 +42,7 @@ def home():
 
 @app.route('/login')
 def login():
-    return github.authorize(callback=url_for('authorized', _external=True, _scheme='https'))
+    return github.authorize(callback=url_for('authorized', _external=True, _scheme='http'))
 
 @app.route('/logout')
 def logout():
@@ -63,7 +63,7 @@ def authorized():
         except:
             session.clear()
             flash("Login could not be completed. Please try again later.")
-    return render_template('message.html', message=message)
+    return redirect(url_for("renderPage1"))
 
 
 @app.route('/page1')
@@ -89,4 +89,4 @@ def get_github_oauth_token():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
